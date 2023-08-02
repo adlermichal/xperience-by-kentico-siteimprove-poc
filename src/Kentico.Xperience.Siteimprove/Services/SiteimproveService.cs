@@ -56,13 +56,6 @@ namespace Kentico.Xperience.Siteimprove
 
 
         /// <inheritdoc/>
-        public string GetDomain()
-        {
-            return RequestContext.CurrentDomain;
-        }
-
-
-        /// <inheritdoc/>
         public async Task CheckPages(IEnumerable<string> urls, CancellationToken? cancellationToken = null)
         {
             var client = HttpClient;
@@ -151,6 +144,12 @@ namespace Kentico.Xperience.Siteimprove
         }
 
 
+        private string GetDomain()
+        {
+            return RequestContext.CurrentDomain;
+        }
+
+
         private async Task<bool> TryEnableContentCheck(HttpClient client, CancellationToken? cancellationToken = null)
         {
             var response = await Post(SiteimproveConstants.CONTENT_CHECK_PATH, cancellationToken, client);
@@ -164,7 +163,7 @@ namespace Kentico.Xperience.Siteimprove
             {
                 string message = response.StatusCode == HttpStatusCode.PaymentRequired
                     ? "Cannot enable content check. User not subscribed to Prepublish feature."
-                    : "An error occured during enabling of content check.";
+                    : "An error occurred during enabling of content check.";
 
                 eventLogService.LogError(nameof(SiteimproveService), nameof(TryEnableContentCheck), message);
 
@@ -194,7 +193,7 @@ namespace Kentico.Xperience.Siteimprove
 
             if (string.IsNullOrEmpty(token))
             {
-                string requestPath = string.Format(SiteimproveConstants.TOKEN_URL, SiteimproveConstants.CMS_NAME);
+                string requestPath = string.Format(SiteimproveConstants.TOKEN_URL, Uri.EscapeDataString(SiteimproveConstants.CMS_NAME));
                 var receivedToken = await Get<SiteimproveToken>(requestPath, cancellationToken);
 
                 if (receivedToken == null)
@@ -249,8 +248,8 @@ namespace Kentico.Xperience.Siteimprove
             var settingsInfo = new SettingsKeyInfo()
             {
                 KeyName = SiteimproveConstants.TOKEN_SETTINGS_KEY_NAME,
-                KeyDisplayName = "{$siteimprove.settings.token$}",
-                KeyDescription = "{$siteimprove.settings.token.description$}",
+                KeyDisplayName = SiteimproveConstants.TOKEN_SETTINGS_KEY_DISPLAY_NAME,
+                KeyDescription = SiteimproveConstants.TOKEN_SETTINGS_KEY_DESCRIPTION,
                 KeyValue = token,
                 KeyType = "string",
                 KeyCategoryID = GetCategoryID(),

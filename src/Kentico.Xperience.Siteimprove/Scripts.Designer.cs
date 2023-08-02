@@ -65,7 +65,7 @@ namespace Kentico.Xperience.Siteimprove {
         ///var _si = window._si || [];
         ///
         ///const HIGHLIGHT_CLASS = &quot;siteimprove-content-check-highlight&quot;;
-        ///const HIGHLIGHT_SECONDS = 4; 
+        ///const HIGHLIGHT_SECONDS = 60; 
         ///const HIGHLIGHT_COLOR = &quot;#ffe066&quot;;
         ///
         ///let cleanupFunction = null;
@@ -74,9 +74,9 @@ namespace Kentico.Xperience.Siteimprove {
         ///const injectHighlightStyles = () =&gt; {
         ///    document.head.insertAdjacentHTML(&apos;beforeend&apos;, `
         ///        &lt;style type=&quot;text/css&quot;&gt;
-        ///            .${HIGHLIGHT_CLASS} {
-        ///              animation-name: highlight-outline;
-        ///          [rest of string was truncated]&quot;;.
+        ///          .${HIGHLIGHT_CLASS} {
+        ///            animation-name: highlight-outline;
+        ///             [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PluginConfiguration {
             get {

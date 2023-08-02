@@ -56,7 +56,7 @@
         /// <summary>
         /// URL of the Siteimprove plugin.
         /// </summary>
-        public const string PLUGIN_URL = "https://cdn.siteimprove.net/cms/overlay.js";
+        public const string PLUGIN_URL = "https://cdn.siteimprove.net/cms/overlay-v2.js";
 
 
         /// <summary>
@@ -81,6 +81,18 @@
         /// Name of the token settings key. 
         /// </summary>
         public const string TOKEN_SETTINGS_KEY_NAME = "SiteimproveToken";
+
+
+        /// <summary>
+        /// Display name of the token settings key.
+        /// </summary>
+        public const string TOKEN_SETTINGS_KEY_DISPLAY_NAME = "{$siteimprove.settings.token$}";
+
+
+        /// <summary>
+        /// Description of the token settings key.
+        /// </summary>
+        public const string TOKEN_SETTINGS_KEY_DESCRIPTION = "{$siteimprove.settings.token.description$}";
 
 
         /// <summary>

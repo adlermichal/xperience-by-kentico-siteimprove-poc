@@ -33,11 +33,10 @@ namespace Kentico.Xperience.Siteimprove
             var node = pageDataRetriever.Retrieve(pageId, false, true);
 
             string token = await siteimproveService.GetToken(cancellationToken);
-            string domain = siteimproveService.GetDomain();
             string url = node != null ? $"'{DocumentURLProvider.GetAbsoluteUrl(node)}'" : "null";
             string contentCheckEnabled = await siteimproveService.IsContentCheckEnabled(cancellationToken) ? "true" : "false";
 
-            return $"{Scripts.PluginConfiguration}('{token}', '{domain}', {url}, {contentCheckEnabled});";
+            return $"{Scripts.PluginConfiguration}('{token}', {url}, {contentCheckEnabled});";
         }
     }
 }

@@ -20,12 +20,6 @@ namespace Kentico.Xperience.Siteimprove
 
 
         /// <summary>
-        /// Returns current domain.
-        /// </summary>
-        string GetDomain();
-
-
-        /// <summary>
         /// Requests a check of provided <paramref name="urls"/>.
         /// </summary>
         /// <param name="urls">URLs to check.</param>

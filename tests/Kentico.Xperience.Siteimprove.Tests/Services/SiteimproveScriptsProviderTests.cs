@@ -20,7 +20,6 @@ namespace Kentico.Xperience.Siteimprove.Tests
         {
             private const string TOKEN = "testToken";
             private const string DOMAIN = "test.com";
-            private const int SITE_ID = 1;
 
             private ISiteimproveScriptsProvider scriptsProvider;
             private ISiteimproveService service;
@@ -34,18 +33,8 @@ namespace Kentico.Xperience.Siteimprove.Tests
                 pageSystemDataContextRetriever = Substitute.For<IPageSystemDataContextRetriever>();
 
                 service.GetToken().Returns(Task.FromResult(TOKEN));
-                service.GetDomain().Returns(DOMAIN);
 
                 scriptsProvider = new SiteimproveScriptsProvider(service, pageSystemDataContextRetriever);
-
-                Fake<SiteInfo, SiteInfoProvider>().WithData(new SiteInfo
-                {
-                    SiteID = SITE_ID,
-                    SiteName = "test",
-                    SiteDomainName = DOMAIN
-                });
-
-                Fake<SiteDomainAliasInfo, SiteDomainAliasInfoProvider>().WithData();
             }
 
 
@@ -60,7 +49,7 @@ namespace Kentico.Xperience.Siteimprove.Tests
 
                 var result = await scriptsProvider.GetConfigurationScript(pageId);
 
-                var expectedResult = $"{Scripts.PluginConfiguration}('{TOKEN}', '{DOMAIN}', null, {enableContentCheck.ToString().ToLower()});";
+                var expectedResult = $"{Scripts.PluginConfiguration}('{TOKEN}', null, {enableContentCheck.ToString().ToLower()});";
 
                 Assert.Multiple(() =>
                 {
@@ -73,15 +62,25 @@ namespace Kentico.Xperience.Siteimprove.Tests
             [TestCase(false, TestName = "GetConfigurationScript_ExistingPageContentCheckDisabled_ReturnsCorrectScriptWithCorrectUrl")]
             public async Task GetConfigurationScript_ExistingPage_ReturnsCorrectScriptWithCorrectUrl(bool enableContentCheck)
             {
+                int siteId = 1;
                 int pageId = 20;
                 string documentCulture = "en-US";
                 string nodeUrl = "test";
+
+                Fake<SiteInfo, SiteInfoProvider>().WithData(new SiteInfo
+                {
+                    SiteID = siteId,
+                    SiteName = "test",
+                    SiteDomainName = DOMAIN
+                });
+
+                Fake<SiteDomainAliasInfo, SiteDomainAliasInfoProvider>().WithData();
 
                 var fakeDocumentURLProvider = new FakeDocumentURLProvider(nodeUrl);
                 DocumentURLProvider.ProviderObject = fakeDocumentURLProvider;
 
                 var mockedTreeNode = Substitute.For<TreeNode>();
-                mockedTreeNode.NodeSiteID.Returns(SITE_ID);
+                mockedTreeNode.NodeSiteID.Returns(siteId);
                 mockedTreeNode.DocumentCulture.Returns(documentCulture);
                 pageSystemDataContextRetriever.Retrieve(pageId, false, true).Returns(mockedTreeNode);
 
@@ -89,7 +88,7 @@ namespace Kentico.Xperience.Siteimprove.Tests
 
                 var result = await scriptsProvider.GetConfigurationScript(pageId);
 
-                var expectedResult = $"{Scripts.PluginConfiguration}('{TOKEN}', '{DOMAIN}', 'http://{DOMAIN}/{nodeUrl}', {enableContentCheck.ToString().ToLower()});";
+                var expectedResult = $"{Scripts.PluginConfiguration}('{TOKEN}', 'http://{DOMAIN}/{nodeUrl}', {enableContentCheck.ToString().ToLower()});";
 
                 Assert.Multiple(() =>
                 {

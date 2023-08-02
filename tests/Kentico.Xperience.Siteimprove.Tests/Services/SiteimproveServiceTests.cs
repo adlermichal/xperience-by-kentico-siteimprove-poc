@@ -154,21 +154,6 @@ namespace Kentico.Xperience.Siteimprove.Tests
 
 
         [TestFixture]
-        public class GetDomainTests : SiteimproveServiceTestsBase
-        {
-            [Test]
-            public void GetDomain_ReturnsCorrectDomain()
-            {
-                string expected = new Uri(DOMAIN).Host;
-
-                string result = service.GetDomain();
-
-                Assert.That(result, Is.EqualTo(expected));
-            }
-        }
-
-
-        [TestFixture]
         public class CheckPagesTests : SiteimproveServiceTestsBase
         {
             [TestCaseSource(nameof(TestCases))]

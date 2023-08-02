@@ -13,7 +13,7 @@ By following the steps below, the integration setups automatically on the first 
 
 2. In `Program.cs`, register services and map routes by adding
 
-    ```
+    ```cs
     WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
     
     ...
@@ -29,19 +29,19 @@ By following the steps below, the integration setups automatically on the first 
     ```
 
 3. In `Views/_ViewImports.cshtml`, add Tag Helper
-    ```
+    ```cs
     @using Kentico.Xperience.Siteimprove
     @addTagHelper *, Kentico.Xperience.Siteimprove
     ```
 
 4. In `Views/Shared/_Layout.cshtml`, place the Tag Helper to a suitable location
-    ```
+    ```cs
     <page-builder-scripts />
     <siteimprove-plugin />
     ```
 
 5. In your `appsettings.json`, add section
-    ```
+    ```json
     "Siteimprove": {
       "APIUser": "<Siteimprove API user>",
       "APIKey": "<Siteimprove API key>",
@@ -54,15 +54,13 @@ By following the steps below, the integration setups automatically on the first 
 1. Add project reference or NuGet from provided file
 
 2. In `Views/_ViewImports.cshtml`, add Tag Helper
-    ```
+    ```cs
     @using Kentico.Xperience.Siteimprove
     @addTagHelper *, Kentico.Xperience.Siteimprove
     ```
 
 3. In `Views/Shared/_Layout.cshtml`, place the Tag Helper inside the head tag
-    ```
-    
-    ...
+    ```cs
     <page-builder-styles />
     <siteimprove-deeplink />
     ```
